@@ -1,0 +1,140 @@
+#postTopic {
+  cursor: pointer;
+  will-change: transform;
+  transform: translateY(100%);
+}
+#postTopic p {
+  color: var(--primary-text-color);
+}
+#postTopic.is-show-scrollToTop-tips {
+  transition: transform 300ms linear 300ms;
+  transform: translateY(-100%);
+}
+#postTopic.is-flash-scrollToTop-tips {
+  transition: transform 300ms linear 900ms;
+  transform: translateY(0);
+}
+#postTopic.is-switch-post-title {
+  transition: none;
+  transform: translateY(0);
+}
+#postTopic.is-show-post-title {
+  transition: transform 300ms linear;
+  transform: translateY(0);
+}
+#postTopic.is-hidden-topic-bar {
+  transition: transform 100ms linear;
+  transform: translateY(100%);
+}
+#postTopic.immediately-show {
+  transition: none;
+  transform: translateY(0);
+}
+
+.post-page .post-content code {
+  border-radius: 4px;
+  background: var(--third-bg-color);
+}
+.post-page .post-content pre {
+  padding: 0;
+  background: transparent;
+}
+.post-page .post-content pre code {
+  padding: 15px;
+  border: 1px solid var(--border-line-color);
+  background: var(--pre-code-bg-color);
+}
+.post-page .post-content .hljs {
+  color: var(--second-text-color);
+}
+.post-page .post-content img {
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  will-change: opacity;
+}
+.post-page .post-content a {
+  color: #ebdbb2;
+}
+.post-page .jump-container .button {
+  max-width: calc(50% - 5px);
+}
+.post-page .jump-container .button span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.post-page .comment-container {
+  border-top: 1px solid var(--border-line-color);
+  padding: 0 4px;
+}
+.post-page .comment-container .column {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+@media screen and (min-width: 769px) {
+  .post-page .comment-container .column {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .post-page .comment-container .column {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+.post-page .toc {
+  list-style: disc !important;
+}
+.post-page .toc ol {
+  margin-top: 5px;
+  margin-left: 15px;
+  list-style: disc !important;
+}
+.post-page .toc-container .toc {
+  position: sticky;
+  top: 60px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 15px;
+  height: calc(100vh - 100px);
+  overflow: auto;
+  border-left: 1px solid var(--border-line-color);
+  list-style: none !important;
+}
+.post-page .toc-container .toc::-webkit-scrollbar {
+  display: none;
+}
+.post-page .toc-container .toc .is-active span {
+  color: #ebdbb2 !important;
+}
+.post-page .toc-container .toc ol {
+  list-style: none !important;
+}
+.post-page :target {
+  padding-top: 60px;
+  margin-top: -60px !important;
+}
+.post-page .comment-box {
+  padding: 0.25rem;
+}
+@media screen and (min-width: 769px) {
+  .post-page .comment {
+    margin-bottom: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 30px -10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    background: var(--second-bg-color);
+    border: 1px solid var(--border-line-color-2);
+    padding: 6px;
+    min-height: calc(100% - 15px);
+  }
+  .post-page .comment-box {
+    padding: 0.75rem;
+  }
+}
+.post-page .utterances {
+  max-width: unset !important;
+}

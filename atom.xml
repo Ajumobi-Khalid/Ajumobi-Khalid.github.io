@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>سماء ﻭَﺭﺩَ</title>
+  
+  
+  <link href="https://ajumobi-khalid.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://ajumobi-khalid.github.io/"/>
+  <updated>2024-04-01T15:43:25.032Z</updated>
+  <id>https://ajumobi-khalid.github.io/</id>
+  
+  <author>
+    <name>Khalid Ajumobi</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Welcome</title>
+    <link href="https://ajumobi-khalid.github.io/2024/03/31/Welcome/"/>
+    <id>https://ajumobi-khalid.github.io/2024/03/31/Welcome/</id>
+    <published>2024-03-31T23:38:44.000Z</published>
+    <updated>2024-04-01T15:43:25.032Z</updated>
+    
+    <content type="html"><![CDATA[<p>I pushed this project back way too far.</p><h1 id="Reason-for-creation"><a href="#Reason-for-creation" class="headerlink" title="Reason for creation"></a>Reason for creation</h1><p>I wanted a place where I could share my myself with the world, and a blog is the perfect medium for that.</p><p>This my first time writing in my free time, so I don’t know what to put here.</p><p>If anyone will even really read this, welcome and I hope you enjoy.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;I pushed this project back way too far.&lt;/p&gt;
+&lt;h1 id=&quot;Reason-for-creation&quot;&gt;&lt;a href=&quot;#Reason-for-creation&quot; class=&quot;headerlink&quot; title=&quot;Reason </summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Sticks</title>
+    <link href="https://ajumobi-khalid.github.io/2024/03/17/Sticks/"/>
+    <id>https://ajumobi-khalid.github.io/2024/03/17/Sticks/</id>
+    <published>2024-03-17T16:34:03.000Z</published>
+    <updated>2024-03-31T23:33:00.759Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://player.odycdn.com/v6/streams/2b7af4d920073cf36850106654ee9c55d8c8376d/aba2a8.mp4" alt="sticks."></p><!-- <iframe src="https://player.vimeo.com/video/449787858?h=489706c111&title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe> --><!-- <p><a href="https://vimeo.com/449787858">Embed Sample</a> from <a href="https://vimeo.com/universityofneworleans">University of New Orleans</a> on <a href="https://vimeo.com">Vimeo</a>.</p> -->]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://player.odycdn.com/v6/streams/2b7af4d920073cf36850106654ee9c55d8c8376d/aba2a8.mp4&quot; alt=&quot;sticks.&quot;&gt;&lt;/p&gt;
+&lt;!-- &lt;iframe src=&quot;</summary>
+      
+    
+    
+    
+    <category term="Portfolio" scheme="https://ajumobi-khalid.github.io/categories/Portfolio/"/>
+    
+    
+    <category term="Photos" scheme="https://ajumobi-khalid.github.io/tags/Photos/"/>
+    
+    <category term="Misc." scheme="https://ajumobi-khalid.github.io/tags/Misc/"/>
+    
+  </entry>
+  
+</feed>

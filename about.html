@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About me · Khalid Ajumobi</title>
+<meta name="description" content="Khalid Ajumobi studies computer engineering at Georgia Tech, with an interest in systems programming and computer architecture. What he has worked on, what he is studying and what he is looking for.">
+<meta name="theme-color" content="#0b0b0b">
+<meta name="color-scheme" content="dark">
+<style>html{background:#0b0b0b;color:#f2f0ea}:where(a){color:inherit}body{visibility:hidden}</style>
+<script>addEventListener("load",function(){document.body.style.visibility="visible"})</script>
+<script>document.documentElement.classList.add("js")</script>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="bar on solid" aria-label="Site">
+  <a class="mark" href="index.html" aria-label="Khalid Ajumobi, home"><svg class="glyph" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#b3a369" stroke-width="2"/><circle cx="16" cy="16" r="3.2" fill="#e3d6a2"/></svg><span>Khalid Ajumobi</span></a>
+  <nav aria-label="Primary"><a href="experience.html">Experience</a><a href="projects.html">Projects</a><a class="pill line" href="about.html" aria-current="page">About me</a><a class="pill" href="mailto:ajumobi@gatech.edu">Email me</a></nav>
+</header>
+<main id="main">
+<div class="wrap">
+  <div class="me-head">
+    <figure class="me-photo"><img src="assets/img/headshot.jpg" alt="Khalid Ajumobi" width="800" height="800"></figure>
+    <div class="me-intro">
+      <h1>Building close<br>to the hardware.</h1>
+      <p class="lead">I’m Khalid, a Computer Engineering student at Georgia Tech. I’m interested in every layer of a computer, but I'm leaning towards systems programming and computer architecture.</p>
+      <dl class="meta me-facts">
+        <div><dt>Based in</dt><dd>Atlanta, Georgia</dd></div>
+        <div><dt>Studying</dt><dd>B.S. Computer Engineering, Georgia Tech, class of 2028</dd></div>
+        <div><dt>Looking for</dt><dd>A summer 2027 internship in software or embedded systems</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <section class="sec" aria-labelledby="story-h">
+    <div class="me-split">
+      <h2 id="story-h" class="h2s">How I got here</h2>
+      <div class="prose me-story">
+        <p>I used a computer for the first time in 2012, to visit Starfall, and wrote my first program in 2018, in ProcessingJS on Khan Academy.</p>
+        <p>My first engineering job came before college. At Vital Systems in Buford I was an electrical engineering intern: I loaded firmware onto FPGA-based CNC control boards, ran the functional tests that decide whether a board is ready for production, and soldered PCBs. That’s where I learned to follow a problem all the way down to the part that causes it.</p>
+        <p>Since then I have done machine learning research, co-founded Classify, and started computer engineering at Georgia Tech.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="work-h">
+    <div class="sec-head"><div><h2 id="work-h">What I like to work on</h2></div><p>I want to be a well-rounded developer, so I try to work at every layer.</p></div>
+    <ul class="themes">
+      <li>
+        <h3>Right on the silicon</h3>
+        <p>I like knowing what the hardware is doing underneath the code. I wrote a CHIP-8 interpreter in C from scratch: 4 KB of memory, sixteen registers, a subroutine stack, and instructions decoded with masks and shifts. It now runs on this site, compiled to WebAssembly.</p>
+        <p class="more"><a class="link" href="work/chip8.html">Play the CHIP-8 interpreter</a></p>
+      </li>
+      <li>
+        <h3>Software people use</h3>
+        <p>Classify is a virtual tutor that reads students’ handwritten work step by step, shows them where they went wrong and guides them through fixing it instead of giving the answer. I wrote the image preprocessing and designed the database, on a team of six that won a $7,500 Franklin CREATE! grant.</p>
+        <p class="more"><a class="link" href="work/classify.html">How Classify works</a></p>
+      </li>
+      <li>
+        <h3>Down to the component</h3>
+        <p>At Vital Systems I worked on FPGA-based CNC control boards: loading firmware, running functional tests and soldering PCBs. When a board failed, I traced it to the one faulty part and replaced it.</p>
+        <p class="more"><a class="link" href="experience.html">My experience</a></p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="sec" aria-labelledby="gt-h">
+    <div class="project-body flush">
+      <div class="prose">
+        <h2 id="gt-h" class="h2s">At Georgia Tech</h2>
+        <p>Georgia Tech lets computer engineers choose two threads, areas to go deep in. I chose the two that sit between hardware and large software systems: how a computer is built, and how many computers work together.</p>
+      </div>
+      <dl class="readout">
+        <div><dt>Degree</dt><dd>B.S. Computer Engineering, expected May 2028</dd></div>
+        <div><dt>Threads</dt><dd>Distributed System and Software Design; System Architecture</dd></div>
+        <div><dt>This term</dt><dd>Circuit Analysis, Intro to Database Systems, Data Structures and Algorithms</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec me-next" aria-labelledby="next-h">
+    <h2 id="next-h">I’m looking for a summer 2027 internship in software or embedded systems.</h2>
+    <p>Email is the fastest way to reach me.</p>
+    <div class="act"><a class="btn" href="mailto:ajumobi@gatech.edu">Email me</a><a class="btn line" href="assets/Khalid_Ajumobi.pdf" target="_blank" rel="noopener">Read my resume</a></div>
+    <div class="row"><a class="link" href="https://www.linkedin.com/in/ajumobi" target="_blank" rel="noopener">LinkedIn</a><a class="link" href="https://github.com/Ajumobi-Khalid" target="_blank" rel="noopener">GitHub</a><a class="link" href="experience.html">Experience and education</a></div>
+  </section>
+</div>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Khalid Ajumobi</span>
+    <ul><li><a href="mailto:ajumobi@gatech.edu">Email</a></li><li><a href="https://www.linkedin.com/in/ajumobi" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://github.com/Ajumobi-Khalid" target="_blank" rel="noopener">GitHub</a></li></ul>
+  </div>
+</footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

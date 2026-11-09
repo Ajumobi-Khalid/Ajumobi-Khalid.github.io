@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classify · Khalid Ajumobi</title>
+<meta name="description" content="Classify, a virtual tutor Khalid Ajumobi co-founded. It reads students’ handwritten work step by step, shows them where they went wrong and guides them to the fix instead of giving the answer.">
+<meta name="theme-color" content="#0b0b0b">
+<meta name="color-scheme" content="dark">
+<style>html{background:#0b0b0b;color:#f2f0ea}:where(a){color:inherit}body{visibility:hidden}</style>
+<script>addEventListener("load",function(){document.body.style.visibility="visible"})</script>
+<script>document.documentElement.classList.add("js")</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="bar on solid" aria-label="Site">
+  <a class="mark" href="../index.html" aria-label="Khalid Ajumobi, home"><svg class="glyph" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#b3a369" stroke-width="2"/><circle cx="16" cy="16" r="3.2" fill="#e3d6a2"/></svg><span>Khalid Ajumobi</span></a>
+  <nav aria-label="Primary"><a href="../experience.html">Experience</a><a href="../projects.html" aria-current="page">Projects</a><a class="pill line" href="../about.html">About me</a><a class="pill" href="mailto:ajumobi@gatech.edu">Email me</a></nav>
+</header>
+<main id="main">
+<div class="wrap">
+  <p class="crumb"><a href="../projects.html">Projects</a> <span aria-hidden="true">/</span> <span>Classify</span></p>
+  <div class="page-head project-page">
+    <h1>Classify</h1>
+    <div class="ph-grid">
+      <p class="lead">A virtual tutor for students. They work a problem out by hand, and Classify reads each step, shows them where they went wrong and guides them through fixing it, instead of just giving the answer. I co-founded it and work on it as a software developer.</p>
+      <dl class="meta">
+        <div><dt>When</dt><dd>January 2026 to now</dd></div>
+        <div><dt>Role</dt><dd>Co-founder, software developer</dd></div>
+        <div><dt>Stack</dt><dd>Gemini API, Supabase, Tavus API</dd></div>
+        <div><dt>Website</dt><dd><a href="https://www.learnclassify.com/" target="_blank" rel="noopener">learnclassify.com</a></dd></div>
+      </dl>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+  <figure class="shot"><img src="../assets/img/classify-tutor.jpg" alt="Classify in use: a student’s handwritten implicit differentiation of x cubed plus y cubed equals 6xy, with the right-hand side circled in red and labelled ‘missing product rule’, and a side panel of tutor messages explaining the missed product rule" width="1950" height="952"></figure>
+  <p class="note">A student working through implicit differentiation of x³ + y³ = 6xy. Classify circled the step where it went wrong, labelled it “missing product rule”, and explains in the side panel which rule was missed and why. The student can ask questions about their work in the box at the bottom right.</p>
+
+  <section class="sec" aria-labelledby="idea-h">
+    <div class="sec-head"><div><h2 id="idea-h">A tutor over your shoulder, not a red X</h2></div><p>Most homework software grades the final answer. A student who gets it wrong learns that they are wrong, but not where their thinking broke down. Classify follows the work as it is written, the way a tutor sitting next to them would.</p></div>
+    <ol class="does">
+      <li>
+        <h3>Finds the step that went wrong</h3>
+        <p>Classify reads the handwriting line by line. When a step goes wrong, it circles that step on the page and names the mistake, so the student sees exactly where to look.</p>
+      </li>
+      <li>
+        <h3>Guides instead of solving</h3>
+        <p>It explains the idea that was missed and asks the student to try again, rather than handing over the worked answer. The student can ask follow-up questions about their own work at any time.</p>
+      </li>
+      <li>
+        <h3>Keeps the teacher in the loop</h3>
+        <p>Each mistake and hint is saved, so a teacher can see where every student struggled across a whole assignment, instead of a spreadsheet of scores.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="sec" aria-labelledby="flow-h">
+    <div class="sec-head"><div><h2 id="flow-h">From handwriting to a hint</h2></div><p>Each piece of work passes through four steps. The second one is mine: cleaning up the image so the handwriting can be read.</p></div>
+    <ol class="steps">
+      <li><b>Write</b><span>A student writes on the canvas or uploads a photo of their work</span></li>
+      <li class="mine"><b>Preprocess</b><span>Image preprocessing reduces noise in the image. I wrote this step.</span></li>
+      <li><b>Read</b><span>Handwriting recognition turns each line into text</span></li>
+      <li><b>Guide</b><span>Gemini finds the step that went wrong and writes a hint, which appears on the page and in the side panel</span></li>
+    </ol>
+  </section>
+
+<section class="sec" aria-labelledby="did-h">
+    <div class="project-body flush">
+      <div class="prose">
+        <h2 id="did-h" class="h2s">What I built</h2>
+        <ul>
+          <li>Co-developed the platform, which combines handwriting recognition, Gemini reasoning and Supabase to guide students through each step of their written work.</li>
+          <li>Designed the Supabase relational database for courses, enrollments, assignments, submissions and student profiles.</li>
+          <li>Developed the image preprocessing that reduces noise in photos of handwriting before it is read.</li>
+        </ul>
+      </div>
+      <div class="side">
+        <dl class="readout">
+          <div><dt>Team</dt><dd>Six people</dd></div>
+          <div><dt>Status</dt><dd>The core product is built. Tutors are checking its feedback against real teaching practice before a first pilot classroom.</dd></div>
+          <div class="verdict"><dt>Grant</dt><dd>$7,500 through Franklin CREATE! at the University of Georgia</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+</div>
+<nav class="pager wrap" aria-label="More projects">
+  <a href="chip8.html" class="next"><span class="label">Next project</span><b>CHIP-8 interpreter</b></a>
+</nav>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Khalid Ajumobi</span>
+    <ul><li><a href="mailto:ajumobi@gatech.edu">Email</a></li><li><a href="https://www.linkedin.com/in/ajumobi" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://github.com/Ajumobi-Khalid" target="_blank" rel="noopener">GitHub</a></li></ul>
+  </div>
+</footer>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

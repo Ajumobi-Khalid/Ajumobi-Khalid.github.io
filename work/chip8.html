@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CHIP-8 interpreter · Khalid Ajumobi</title>
+<meta name="description" content="A CHIP-8 interpreter in C by Khalid Ajumobi, with SDL2 graphics, input and audio.">
+<meta name="theme-color" content="#0b0b0b">
+<meta name="color-scheme" content="dark">
+<style>html{background:#0b0b0b;color:#f2f0ea}:where(a){color:inherit}body{visibility:hidden}</style>
+<script>addEventListener("load",function(){document.body.style.visibility="visible"})</script>
+<script>document.documentElement.classList.add("js")</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/space-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="bar on solid" aria-label="Site">
+  <a class="mark" href="../index.html" aria-label="Khalid Ajumobi, home"><svg class="glyph" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#b3a369" stroke-width="2"/><circle cx="16" cy="16" r="3.2" fill="#e3d6a2"/></svg><span>Khalid Ajumobi</span></a>
+  <nav aria-label="Primary"><a href="../experience.html">Experience</a><a href="../projects.html" aria-current="page">Projects</a><a class="pill line" href="../about.html">About me</a><a class="pill" href="mailto:ajumobi@gatech.edu">Email me</a></nav>
+</header>
+<main id="main">
+<div class="wrap">
+  <p class="crumb"><a href="../projects.html">Projects</a> <span aria-hidden="true">/</span> <span>CHIP-8 interpreter</span></p>
+  <div class="page-head project-page">
+    <h1>CHIP-8 interpreter</h1>
+    <div class="ph-grid">
+      <p class="lead">A CHIP-8 interpreter in C that loads ROMs, runs the instruction set, and drives graphics, input and audio through SDL2.</p>
+      <dl class="meta">
+        <div><dt>When</dt><dd>December 2025</dd></div>
+        <div><dt>Language</dt><dd>C23</dd></div>
+        <div><dt>Tools</dt><dd>SDL2, GNU make, Linux</dd></div>
+        <div><dt>Source</dt><dd><a href="https://github.com/Ajumobi-Khalid/Chip8" target="_blank" rel="noopener">Ajumobi-Khalid/Chip8</a></dd></div>
+      </dl>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+  <section class="player" id="player" data-wasm="../assets/wasm/" aria-labelledby="play-h">
+    <div class="sec-head"><div><h2 id="play-h">Run a ROM in your browser</h2></div><p>This is <code>chip8.c</code> itself, compiled to WebAssembly with Emscripten. The same C code draws the screen and plays the beep through SDL2. Pick a game or load your own <code>.ch8</code> file. Everything runs on your machine.</p></div>
+    <div class="player-grid">
+      <div class="screen">
+        <div class="screen-frame">
+          <canvas id="c8-screen" width="960" height="480" tabindex="0" role="img" aria-label="The CHIP-8 screen, 64 by 32 pixels"></canvas>
+          <p class="screen-overlay" id="c8-overlay">Pick a game to start</p>
+        </div>
+        <div class="controls">
+          <span id="c8-status" aria-live="polite">No ROM loaded</span>
+          <label class="clock"><span>Clock</span>
+            <select id="c8-clock">
+              <option value="500">500 Hz</option>
+              <option value="900">900 Hz</option>
+              <option value="1200">1,200 Hz</option>
+              <option value="1800">1,800 Hz</option>
+            </select>
+          </label>
+          <button class="ctl" type="button" id="c8-pause" disabled>Pause</button>
+          <button class="ctl" type="button" id="c8-reset" disabled>Reset</button>
+          <button class="ctl" type="button" id="c8-mute" aria-pressed="false">Sound on</button>
+        </div>
+      </div>
+      <div class="shelf">
+        <p class="label">Games</p>
+        <ul class="roms" id="c8-roms"></ul>
+        <div class="load" id="c8-drop">
+          <input type="file" id="c8-file" accept=".ch8,.c8,.rom,.bin,application/octet-stream">
+          <label class="btn line" for="c8-file">Load a .ch8 file</label>
+          <p class="note">Or drop one on the screen. Up to 3,584 bytes.</p>
+        </div>
+        <p class="note credit">The games are from the <a class="link" href="https://github.com/JohnEarnest/chip8Archive" target="_blank" rel="noopener">Chip8 Community Archive</a>, released into the public domain (CC0) by their authors.</p>
+      </div>
+      <div class="deck">
+        <p class="label pad-l">Keypad</p>
+        <div class="keypad" id="c8-keypad"></div>
+        <p class="note pad-n">Tap the keys or use your keyboard: 1 2 3 4, Q W E R, A S D F, Z X C V. Space pauses, = resets.</p>
+        <p class="label reg-l">Registers</p>
+        <div class="regs-live" id="c8-regs"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="machine-h">
+    <div class="sec-head"><div><h2 id="machine-h">What the interpreter models</h2></div><p>CHIP-8 is a tiny virtual machine from the 1970s. The interpreter keeps its whole state in a few arrays: memory, registers, a stack and the screen.</p></div>
+    <div class="machine">
+      <div class="mem" role="img" aria-label="4 KB of memory: the first 512 bytes hold the interpreter and the font, programs load at address 0x200">
+        <div class="seg sys"><span class="mono">0x000</span><b>Interpreter and font</b><span>512 bytes</span></div>
+        <div class="seg rom"><span class="mono">0x200</span><b>Program ROM and working memory</b><span>3,584 bytes, up to 0xFFF</span></div>
+      </div>
+      <dl class="readout five">
+        <div><dt>V0 to VF</dt><dd>Sixteen 8-bit registers; VF is the flag</dd></div>
+        <div><dt>I</dt><dd>Address register</dd></div>
+        <div><dt>PC</dt><dd>Program counter, starts at 0x200</dd></div>
+        <div><dt>Stack</dt><dd>Return addresses for subroutines</dd></div>
+        <div><dt>Screen</dt><dd>64 × 32 pixels, one bit each</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="decode-h">
+    <div class="project-body flush">
+      <div class="prose">
+        <h2 id="decode-h" class="h2s">Two bytes per instruction</h2>
+        <p>Every instruction is two bytes. The fields are pulled out with masks and shifts, then the high nibble picks the operation.</p>
+<pre><code><span class="tok-k">uint16_t</span> op = mem[pc] &lt;&lt; <span class="tok-n">8</span> | mem[pc + <span class="tok-n">1</span>];
+
+<span class="tok-k">uint8_t</span>  x   = (op &amp; <span class="tok-n">0x0F00</span>) &gt;&gt; <span class="tok-n">8</span>; <span class="tok-c">// Vx</span>
+<span class="tok-k">uint8_t</span>  y   = (op &amp; <span class="tok-n">0x00F0</span>) &gt;&gt; <span class="tok-n">4</span>; <span class="tok-c">// Vy</span>
+<span class="tok-k">uint8_t</span>  n   =  op &amp; <span class="tok-n">0x000F</span>;
+<span class="tok-k">uint8_t</span>  nn  =  op &amp; <span class="tok-n">0x00FF</span>;
+<span class="tok-k">uint16_t</span> nnn =  op &amp; <span class="tok-n">0x0FFF</span>;
+
+<span class="tok-k">switch</span> (op &amp; <span class="tok-n">0xF000</span>) { <span class="tok-c">/* ... */</span> }</code></pre>
+      </div>
+      <div class="side">
+        <p class="label" style="margin-bottom:14px">A few of the instructions</p>
+        <table class="ptable">
+          <tbody>
+            <tr><th scope="row">00E0</th><td>Clear the screen</td></tr>
+            <tr><th scope="row">1NNN</th><td>Jump to address NNN</td></tr>
+            <tr><th scope="row">2NNN</th><td>Call the subroutine at NNN</td></tr>
+            <tr><th scope="row">00EE</th><td>Return from a subroutine</td></tr>
+            <tr><th scope="row">6XNN</th><td>Set Vx to NN</td></tr>
+            <tr><th scope="row">8XY4</th><td>Add Vy to Vx; VF holds the carry</td></tr>
+            <tr><th scope="row">ANNN</th><td>Set I to NNN</td></tr>
+            <tr><th scope="row">DXYN</th><td>Draw an N-row sprite at Vx, Vy; VF flags a collision</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="built-h">
+    <div class="project-body flush">
+      <div class="prose">
+        <h2 id="built-h" class="h2s">What I built</h2>
+        <ul>
+          <li>Modeled the machine state: 4 KB of memory, sixteen 8-bit registers and a subroutine stack.</li>
+          <li>Decoded binary instructions with bitwise masking and shifts to implement arithmetic and control flow.</li>
+          <li>Implemented ROM loading and SDL2 graphics, input and audio, including the 64×32 display with XOR sprite collision detection.</li>
+          <li>Tested and debugged against CHIP-8 test ROMs.</li>
+          <li>Compiled the same C to WebAssembly with Emscripten so it runs on this page: the browser now drives the frame loop that <code>SDL_Delay</code> used to pace.</li>
+        </ul>
+      </div>
+      <div class="side">
+        <p class="label" style="margin-bottom:14px">Build and run</p>
+        <p class="note" style="margin:0 0 4px">Requires gcc, SDL2 and GNU make on Linux.</p>
+<pre><code>make
+./chip8 path/to/rom.ch8</code></pre>
+      </div>
+    </div>
+  </section>
+</div>
+<nav class="pager wrap" aria-label="More projects">
+  <a href="classify.html"><span class="label">Previous project</span><b>Classify</b></a>
+</nav>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Khalid Ajumobi</span>
+    <ul><li><a href="mailto:ajumobi@gatech.edu">Email</a></li><li><a href="https://www.linkedin.com/in/ajumobi" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://github.com/Ajumobi-Khalid" target="_blank" rel="noopener">GitHub</a></li></ul>
+  </div>
+</footer>
+<script src="../assets/js/chip8-wasm.js"></script>
+<script src="../assets/js/chip8-roms.js"></script>
+<script src="../assets/js/chip8-player.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

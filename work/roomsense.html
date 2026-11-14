@@ -63,6 +63,11 @@
 
   <section class="sec" aria-labelledby="flow-h">
     <div class="sec-head"><div><h2 id="flow-h">From a radio signal to a guess</h2></div><p>Every couple of seconds, the measurements pass through four steps before anything appears on screen.</p></div>
+    <div class="boards">
+      <figure><img src="../assets/img/roomsense-tx.jpg" alt="An ESP32 board with its red power light on, lying on a desk beside a laptop, powered over a white USB-C cable" width="800" height="1063" loading="lazy"><figcaption><b>Transmitter</b>On the desk, sending packets across the room</figcaption></figure>
+      <figure><img src="../assets/img/roomsense-rx1.jpg" alt="An ESP32 board on a small foam pad balanced on the rim of a lampshade in the corner of the room, connected by a braided USB cable" width="800" height="1082" loading="lazy"><figcaption><b>Receiver 1</b>On a lampshade in the corner, raised off the floor</figcaption></figure>
+      <figure><img src="../assets/img/roomsense-rx2.jpg" alt="An ESP32 board mounted on foam above a door frame, with its USB cable hanging down to the floor" width="800" height="1063" loading="lazy"><figcaption><b>Receiver 2</b>Mounted on foam above a door frame</figcaption></figure>
+    </div>
     <ol class="steps">
       <li><b>Transmit</b><span>One ESP32 sends a steady stream of Wi-Fi packets across the room</span></li>
       <li><b>Receive</b><span>Two ESP32 receivers record Channel State Information (CSI) for each packet and send it to the laptop over USB serial</span></li>

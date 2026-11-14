@@ -410,3 +410,11 @@ p.note { color: var(--faint); font-size: 0.9375rem; margin: 14px 0 0; max-width:
 @media (max-width: 860px) {
   .does { grid-template-columns: 1fr; }
 }
+
+/* ---------- RoomSense: two screenshots side by side, worked / didn't ---------- */
+.shots2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); align-items: start; }
+.wl { display: grid; grid-template-columns: 1fr 1fr; gap: 40px clamp(32px, 5vw, 80px); }
+.wl .prose { max-width: none; }
+.wl h3 { font-size: clamp(1.375rem, 1rem + 0.8vw, 1.75rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.2; margin: 0; padding-top: 22px; border-top: 1px solid var(--line); }
+.wl .prose h3 + ul { margin-top: 18px; }
+@media (max-width: 860px) { .shots2, .wl { grid-template-columns: 1fr; } }

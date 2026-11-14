@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RoomSense · Khalid Ajumobi</title>
+<meta name="description" content="RoomSense, Khalid Ajumobi’s ECE 1100 Discovery Project: three ESP32 boards that sense movement through changes in Wi-Fi signals and estimate which side of a room a person is on, without a camera.">
+<meta name="theme-color" content="#0b0b0b">
+<meta name="color-scheme" content="dark">
+<style>html{background:#0b0b0b;color:#f2f0ea}:where(a){color:inherit}body{visibility:hidden}</style>
+<script>addEventListener("load",function(){document.body.style.visibility="visible"})</script>
+<script>document.documentElement.classList.add("js")</script>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="bar on solid" aria-label="Site">
+  <a class="mark" href="../index.html" aria-label="Khalid Ajumobi, home"><svg class="glyph" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#b3a369" stroke-width="2"/><circle cx="16" cy="16" r="3.2" fill="#e3d6a2"/></svg><span>Khalid Ajumobi</span></a>
+  <nav aria-label="Primary"><a href="../experience.html">Experience</a><a href="../projects.html" aria-current="page">Projects</a><a class="pill line" href="../about.html">About me</a><a class="pill" href="mailto:ajumobi@gatech.edu">Email me</a></nav>
+</header>
+<main id="main">
+<div class="wrap">
+  <p class="crumb"><a href="../projects.html">Projects</a> <span aria-hidden="true">/</span> <span>RoomSense</span></p>
+  <div class="page-head project-page">
+    <h1>RoomSense</h1>
+    <div class="ph-grid">
+      <p class="lead">Wi-Fi motion sensing and location estimation. Three ESP32 boards notice when someone moves through a room, and guess which side of it they are on, with no camera and nothing for the person to carry.</p>
+      <dl class="meta">
+        <div><dt>When</dt><dd>Fall 2026</dd></div>
+        <div><dt>For</dt><dd>ECE 1100 Discovery Project, Georgia Tech</dd></div>
+        <div><dt>Hardware</dt><dd>Three ESP32 boards: one transmitter, two receivers</dd></div>
+        <div><dt>Software</dt><dd>ESP32 CSI firmware, Python</dd></div>
+        <div><dt>Threads</dt><dd>Sensing &amp; Exploration, Signal &amp; Information Processing</dd></div>
+      </dl>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+  <div class="shots2">
+    <figure class="shot"><img src="../assets/img/roomsense-b.jpg" alt="The RoomSense interface showing “Best guess: B” with side B highlighted, the activity panel reading “Movement likely”, both receivers on COM5 and COM6 receiving about 50 to 60 packets every 2 seconds, and a motion-over-time graph with a large spike from receiver 2" width="1116" height="843"></figure>
+    <figure class="shot"><img src="../assets/img/roomsense-a.jpg" alt="The RoomSense interface showing “Best guess: A” with side A highlighted, the activity panel reading “Checking a change”, and a motion-over-time graph from both receivers" width="1122" height="858"></figure>
+  </div>
+  <p class="note">The live interface I built, a minute apart. In the first, movement is likely, receiver 2’s motion trend spikes, and the best guess is side B. In the second, the best guess is side A. The graph plots each receiver’s motion trend over time, and the activity panel warns when a guess is only a weak match to the saved examples.</p>
+
+  <section class="sec" aria-labelledby="idea-h">
+    <div class="sec-head"><div><h2 id="idea-h">The idea</h2></div><p>A Wi-Fi signal does not travel in a straight line. It bounces off walls, furniture and people, so when someone moves, the signal that reaches a receiver changes slightly.</p></div>
+    <div class="project-body flush">
+      <div class="prose">
+        <p>My starting idea was to use inexpensive ESP32 boards to sense a person through those changes. I wanted to detect movement and estimate where someone was, without a camera and without asking them to carry a phone or a tag.</p>
+        <p>Full indoor positioning is a research problem on its own, so I narrowed the location goal to two marked spots, A and B, on opposite sides of the room. That kept the project small enough to finish while still exploring both halves of the question: is someone moving, and where are they?</p>
+      </div>
+      <div class="side">
+        <dl class="readout">
+          <div><dt>Senses</dt><dd>Movement, and which of two spots a person is at</dd></div>
+          <div><dt>Without</dt><dd>A camera, or a device on the person</dd></div>
+          <div class="verdict"><dt>Cost</dt><dd>Three ESP32 boards and a laptop</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="flow-h">
+    <div class="sec-head"><div><h2 id="flow-h">From a radio signal to a guess</h2></div><p>Every couple of seconds, the measurements pass through four steps before anything appears on screen.</p></div>
+    <ol class="steps">
+      <li><b>Transmit</b><span>One ESP32 sends a steady stream of Wi-Fi packets across the room</span></li>
+      <li><b>Receive</b><span>Two ESP32 receivers record Channel State Information (CSI) for each packet and send it to the laptop over USB serial</span></li>
+      <li class="mine"><b>Process</b><span>Python takes the amplitude of each reading, normalizes it and compares it with a saved quiet signal</span></li>
+      <li><b>Decide</b><span>A threshold flags movement, and the closest saved fingerprint gives the A or B guess</span></li>
+    </ol>
+  </section>
+
+  <section class="sec" aria-labelledby="prog-h">
+    <div class="sec-head"><div><h2 id="prog-h">How it came together</h2></div><p>The project changed shape as I learned what the data could and could not tell me.</p></div>
+    <ol class="does">
+      <li>
+        <h3>Set up the hardware</h3>
+        <p>I installed the ESP32 development tools and USB drivers, then flashed firmware onto three boards: one transmitter and two receivers.</p>
+      </li>
+      <li>
+        <h3>Collected CSI</h3>
+        <p>I recorded Channel State Information from both receivers and looked at the raw measurements to see what a room full of Wi-Fi actually looks like.</p>
+      </li>
+      <li>
+        <h3>Compared still and walking</h3>
+        <p>With Python recording and analysis tools, I compared stretches where I stood still with stretches where I walked, to find a signal that separates the two.</p>
+      </li>
+      <li>
+        <h3>Saved location fingerprints</h3>
+        <p>I collected labeled examples at different spots and used their signal patterns as fingerprints to match new readings against.</p>
+      </li>
+      <li>
+        <h3>Narrowed to A and B</h3>
+        <p>Three spots gave inconsistent results, so I reduced the scope to two spots on opposite sides of the room.</p>
+      </li>
+      <li>
+        <h3>Built the live interface</h3>
+        <p>The final interface shows a live motion graph, highlights its best A/B guess automatically, and has a short reference refresh for when a board is moved.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="sec" aria-labelledby="out-h">
+    <div class="sec-head"><div><h2 id="out-h">What worked, and what didn’t</h2></div><p>I built a working prototype. Motion sensing held up in testing; location is still an experiment.</p></div>
+    <div class="wl">
+      <div class="prose">
+        <h3>Worked</h3>
+        <ul>
+          <li>The boards collect wireless measurements reliably enough to graph live.</li>
+          <li>In a controlled test, it told walking apart from stillness, and cleared its alert after I stopped moving.</li>
+          <li>It produces an A/B location guess automatically, and says when that guess is a weak match.</li>
+        </ul>
+      </div>
+      <div class="prose">
+        <h3>Didn’t, yet</h3>
+        <ul>
+          <li>Lost packets and noisy readings left gaps and spikes in the data, which you can see as breaks in the graph.</li>
+          <li>Signal patterns drifted. Moving a board meant the earlier calibration no longer described the same setup.</li>
+          <li>Location results were inconsistent, so the A/B display is an experimental estimate. I have not measured a dependable accuracy figure.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="skills-h">
+    <div class="sec-head"><div><h2 id="skills-h">ECE skills I gained</h2></div></div>
+    <ol class="does">
+      <li>
+        <h3>Microcontrollers and firmware</h3>
+        <p>Setting up ESP32 boards, installing drivers, flashing firmware, reading data over USB serial, and arranging wireless hardware for an experiment.</p>
+      </li>
+      <li>
+        <h3>Signal processing</h3>
+        <p>Working with amplitude, normalization, noise and threshold calibration to turn raw radio measurements into a motion signal I could trust.</p>
+      </li>
+      <li>
+        <h3>Testing a sensor honestly</h3>
+        <p>Comparing saved measurements taught me why a system needs separate training and testing data, and why a graph that changes does not prove the sensor detected the event I meant.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="sec" aria-labelledby="final-h">
+    <div class="project-body flush">
+      <div class="prose">
+        <h2 id="final-h" class="h2s">Final thoughts</h2>
+        <p>RoomSense connected two threads I am interested in: Sensing &amp; Exploration, and Signal &amp; Information Processing. The biggest lesson was that collecting wireless data is only the first step. Interpreting it consistently is a separate, harder problem.</p>
+        <p>It made me want to learn more ESP32 programming and keep improving the two-spot estimator. If I continue, I will test repeated visits to each spot and different body orientations before adding more locations, so that any accuracy number I report is one I can stand behind.</p>
+      </div>
+      <div class="side">
+        <dl class="readout">
+          <div><dt>Status</dt><dd>Working prototype. Motion sensing works; the A/B guess is experimental.</dd></div>
+          <div class="verdict"><dt>Next</dt><dd>More repeated visits and body orientations, then more spots</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+</div>
+<nav class="pager wrap" aria-label="More projects">
+  <a href="chip8.html"><span class="label">Previous project</span><b>CHIP-8 interpreter</b></a>
+</nav>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Khalid Ajumobi</span>
+    <ul><li><a href="mailto:ajumobi@gatech.edu">Email</a></li><li><a href="https://www.linkedin.com/in/ajumobi" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://github.com/Ajumobi-Khalid" target="_blank" rel="noopener">GitHub</a></li></ul>
+  </div>
+</footer>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>
